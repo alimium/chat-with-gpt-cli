@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package chatbot;
+
+message ConversationalRequest {
+    string session_uuid = 1;
+    string input = 2;
+}
+
+message ConversationalResponse {
+    enum Status {
+        UKNOWN = 0;
+        LOAD_HISTORY=1;
+        BUILD_PROMPT=2;
+        GENERATE_RESPONSE=3;
+        UPDATE_MEMORY=4;
+        FINISHED=5;
+        FAILED=6;
+    }
+    Status status = 1;
+    string token = 2;
+}
+
+service Chatbot {
+    rpc Conversational(ConversationalRequest) returns (stream ConversationalResponse);
+};
