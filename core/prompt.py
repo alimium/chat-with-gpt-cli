@@ -11,9 +11,12 @@ class PromptEngine:
         system_msg: str | None = None,
         history: str | None = None,
         summary: str | None = None,
+        web_resources: str | None = None,
     ):
-        system_msg = DEFAULT_CONVERSATION_SYS_MSG if system_msg is None else system_msg
+        system_msg = system_msg or DEFAULT_CONVERSATION_SYS_MSG
         template = ""
+        if web_resources:
+            template += f"WEB RESOURCES:\n{web_resources}\n\n"
         if summary:
             template += f"SUMMARY OF CONVERSATION:\n{summary}\n\n"
         template += f"{system_msg}\n"

@@ -1,4 +1,5 @@
 openai
+tavily-python
 langchain
 langchain-openai
 grpcio

@@ -28,19 +28,25 @@ def run():
                 status = response.status
                 match status:
                     case ConversationalResponse.Status.LOAD_HISTORY:
-                        print(Fore.YELLOW + "Loading History...", end="\r")
+                        print(Fore.YELLOW + "Loading History...                                       ", end= Style.RESET_ALL+"\r")
                     case ConversationalResponse.Status.BUILD_PROMPT:
-                        print(Fore.YELLOW + "Building Prompt...", end="\r")
+                        print(Fore.YELLOW + "Building Prompt...                                       ", end= Style.RESET_ALL+"\r")
                     case ConversationalResponse.Status.GENERATE_RESPONSE:
-                        print(Fore.CYAN + response.token, flush=True, end="")
+                        print(Fore.CYAN + response.token,
+                              flush=True, end=Style.RESET_ALL)
                         token_counter += 1
                     case ConversationalResponse.Status.UPDATE_MEMORY:
                         print(
-                            Fore.YELLOW + "\nSaving conversation into memory...",
-                            end="\r",
+                            Fore.YELLOW + "\nSaving conversation into memory...                       ",
+                            end= Style.RESET_ALL+"\r",
                         )
                     case ConversationalResponse.Status.FAILED:
-                        print(Fore.RED + "An Error Occured!")
+                        print(Fore.RED + "An Error Occured!" + Style.RESET_ALL)
+                    case ConversationalResponse.Status.WEB_SEARCH:
+                        print(Fore.YELLOW + "Searching web...", end= Style.RESET_ALL+"\r")
+                    case ConversationalResponse.Status.FINISHED:
+                        print(Style.DIM + "Used Sources:                                            \n" +
+                              "\n".join(response.used_sources), end=Style.RESET_ALL+"\n")
             print(
                 Fore.RESET
                 + Style.DIM

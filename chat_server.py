@@ -15,6 +15,9 @@ def serve():
     logging.basicConfig(level=logging.INFO)
     logging.info("Starting the server...")
     load_dotenv()
+    tavily_api_key = os.getenv("TAVILY_API_KEY")
+    if tavily_api_key is None:
+        raise ValueError("TAVILY_API_KEY is not set")
     openai_api_key = os.getenv("OPENAI_API_KEY")
     if openai_api_key is None:
         raise ValueError("OpenAI API is not set")
@@ -27,7 +30,7 @@ def serve():
         grpc_max_workers = 10
 
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=int(grpc_max_workers)))
-    add_ChatbotServicer_to_server(ChatbotServicerImpl(openai_api_key), server)
+    add_ChatbotServicer_to_server(ChatbotServicerImpl(openai_api_key, tavily_api_key), server)
     server.add_insecure_port(f"[::]:{grpc_port}")
     server.start()
     logging.info("Server started at port %s", grpc_port)

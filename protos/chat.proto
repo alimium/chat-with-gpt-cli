@@ -11,14 +11,16 @@ message ConversationalResponse {
     enum Status {
         UKNOWN = 0;
         LOAD_HISTORY=1;
-        BUILD_PROMPT=2;
-        GENERATE_RESPONSE=3;
-        UPDATE_MEMORY=4;
-        FINISHED=5;
-        FAILED=6;
+        WEB_SEARCH=2;
+        BUILD_PROMPT=3;
+        GENERATE_RESPONSE=4;
+        UPDATE_MEMORY=5;
+        FINISHED=6;
+        FAILED=7;
     }
     Status status = 1;
     string token = 2;
+    repeated string used_sources = 3;
 }
 
 service Chatbot {
